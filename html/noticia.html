@@ -1,0 +1,49 @@
+<div class="row"  ng-init="posicionarTop()">
+
+	<div class="col-md-12"> 
+		<div class="title-one-new text-center">
+			<h1>{{newObject.titol}}</h1>
+		</div>
+	</div>
+
+	<div class="col-md-12 margintop20"> 
+		<div id="breadcrumb-general" class="btn-group btn-breadcrumb">
+            <a href="#" class="btn item-breadcrumb"><i class="fa fa-home"></i></a>
+            <a ui-sref="noticies" ng-click="posicionarTop()" class="btn item-breadcrumb"><div> {{constant.nostresNoticies}} </div></a>
+            <a href="" class="btn item-breadcrumb"><div> {{constant.noticia}} </div></a>
+            <a href="" class="btn item-breadcrumb"><div> {{newObject.id}} </div></a>
+	    </div>
+	</div>
+
+
+	<div class="col-md-10 col-md-offset-1 col-xs-12 margintop20 marginbot40"> 
+		
+		<div class="col-md-4 col-xs-12 image-one-newObject"> 
+		
+			<img src="{{newObject.img_noticia}}" class="img-responsive "/>
+		
+		</div>
+
+		<div class="col-md-8 col-xs-12 desc-one-newObject" >
+			<div class="col-md-12 col-xs-12">
+				<article class="data-publicacio-newObject">
+					<i class="fa fa-calendar" aria-hidden="true"></i> Data publicaci&oacute; :
+					<strong>{{newObject.data_noticia | date:'longDate'}}</strong>
+				</article>
+			</div>
+
+			<div class="col-md-12 subtitle-one-newObject">
+				<h4> {{newObject.subtitol}} </h4>
+			</div>
+
+			<div class="col-md-12 newObject-one-newObject" ng-bind-html="newObject.noticia"></div>
+		</div>
+
+	</div>
+
+	<div class="col-sm-4 col-sm-offset-4"> 
+
+	</div>
+
+</div> <!-- end row -->
+

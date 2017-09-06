@@ -1,0 +1,79 @@
+<div class="row" ng-repeat="product in $parent.totalProductsArray" ng-if="product.id==selectedNewID">
+
+	<div class="col-lg-12 col-md-12">
+		<div class="title-one-new text-center">
+			<h1>{{product.nom}}</h1>
+		</div>
+	</div>
+
+	<div class="col-lg-12 col-md-12 margintop20">
+		<div id="breadcrumb-general" class="btn-group btn-breadcrumb">
+			<a href="#" class="btn item-breadcrumb"><i class="fa fa-home"></i></a>
+			<a ui-sref="cataleg" ng-click="posicionarTop()" class="btn item-breadcrumb">
+				<div> Productes </div>
+			</a>
+			<a ui-sref="cataleg" ng-click="posicionarTop()" class="btn item-breadcrumb">
+				<div> Catàleg </div>
+			</a>
+			<a ng-click="redirectState()" class="btn item-breadcrumb">
+				<div ng-repeat="categoria in categoriesArray" ng-if="categoria.id == product.categoria"> {{categoria.ca_nom}} </div>
+			</a>
+			<!-- <a ng-click="redirectState()" class="btn item-breadcrumb"><div ng-repeat="subcategoria in subcategoriesArray" ng-if="subcategoria.id == product.subcategoria"> {{subcategoria.ca_nom}} </div></a> -->
+			<a href="" class="btn item-breadcrumb" title="{{product.nom}}">
+				<div> {{product.codi}} </div>
+			</a>
+		</div>
+	</div>
+
+
+	<div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1">
+
+		<div class="col-lg-4 col-md-4 image-one-new">
+			<img class=" img-responsive center" ng-src="images/productes/{{product.imatge}}" on-error-src="images/productes/producte_no_disponible.jpg">
+		</div>
+
+		<div class="col-lg-8 col-md-8 desc-one-new clear-marginbottom">
+
+			<div class="col-md-12">
+				<article class="data-publicacio-new">
+					<i class="fa fa-calendar" aria-hidden="true"></i> Data publicaci&oacute; :
+					<strong>{{product.data_creacio | date:'longDate'}}</strong>
+				</article>
+			</div>
+
+		</div>
+
+		<div class="col-lg-6 col-md-8">
+
+			<div class="col-md-12 subtitle-one-new">
+				<h4> {{product.info}} </h4>
+			</div>
+
+			<div class="col-md-12 new-one-new">
+				{{product.descripcio}}
+			</div>
+
+		</div>
+
+		<div class="col-lg-2 col-lg-offset-0 col-md-4 col-md-offset-2 box-pvp">
+
+			<div class="col-md-12">
+
+				<div class="col-lg-12 col-md-12 col-xs-6 box-preu-title">
+					<strong>{{constant.preu}}</strong>
+				</div>
+
+				<div class="col-lg-12 col-md-12 col-xs-6 box-preu-preu" ng-if="product.preu > 0">
+					{{product.preu | number:2 }} &euro; / {{ product.tipus }}
+				</div>
+				<div class="col-lg-12 col-md-12 col-xs-6 box-preu-preu" ng-if="product.preu == 0">
+					Consultar
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
+</div>
+<!-- end row -->

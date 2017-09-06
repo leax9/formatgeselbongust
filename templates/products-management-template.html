@@ -1,0 +1,75 @@
+<h1> Gestió de Productes</h1>
+
+<div class="row">
+
+  <div class="col-md-12 text-center margintop20 marginbot40">
+		<input class="seaching" ng-model="searchProduct" placeholder="Busca el teu producte...">
+	</div>
+
+  <div class="table-condensed table-responsive col-md-12 col-sm-12 col-xs-12">
+
+    <div class="col-md-12">
+      <div class="col-md-10 ">
+        <input type="Button" name="saveButton" id="saveButtonId" value="Guardar" ng-click="bonGustMainCtrl.changeSliderAndNewsImages()" ng-disabled="activeCheckboxSliderArray.length!=3 && activeCheckboxNewsArray.length!=3" class="btn btn-primary pull-right"/>
+      </div>
+
+      <div class="col-md-2 col-sm-12 col-xs-12">
+        <button type="button" class="btn btn-success pull-right" data-toggle="modal" data-target="#newProductModal"><i class="glyphicon glyphicon-plus-sign"></i> Nou producte</button>
+      </div>
+    </div>
+
+    <div class="col-md-12">
+      <table class="table table-hover" style="border: 1px solid black;">
+        <thead>
+          <tr>
+            <!--<th class="text-center"><i class="fa fa-picture-o" aria-hidden="true"></i></th>-->
+            <th class="text-center">ID</th>
+            <th class="text-center">CODI</th>
+            <th class="text-center">CATEGORIA</th>
+            <th class="text-center">SUBCATEGORIA</th>
+            <th class="text-center">NOM</th>
+            <th class="text-center">INFO</th>
+            <th class="text-center">IMATGE</th>
+            <th class="text-center">DESCRIPCIO</th>
+           <!-- <th class="text-center">PREU</th>
+            <th class="text-center">TIPUS</th> -->
+            <th class="text-center">ACTIU</th>
+            <th class="text-center">DATA CREACIÓ</th>
+            <th class="text-center">USUARI</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- ng-repeat="new in $parent.displayItems | filter : {titol: searchText} as filteredItems" -->
+          <tr ng-repeat="product in totalProductsArray | filter:searchProduct" class="dades">
+            <!--<td class="paddingtop20"><input type="checkbox" id="productId{{$index}}" name="checkboxNName{{$index}}" checklist-model="activeCheckboxProductArray" checklist-value="new" ng-disabled="activeCheckboxSliderArray.length==3 && this.checked==false"/></td>-->
+            <td class="text-center paddingtop20">{{product.id}}</td>
+            <td class="text-center paddingtop20">{{product.codi}}</td>
+            <td class="text-center paddingtop20">{{product.categoria}}</td>
+            <td class="text-center paddingtop20">{{product.subcategoria}}</td>
+            <td class="text-center paddingtop20">{{product.nom}}</td>
+            <td class="text-center paddingtop20">{{product.info}}</td>
+            <td class="text-center paddingtop20">{{product.imatge}}</td>
+            <td class="text-center paddingtop20">{{product.descripcio | limitTo: 50}}{{product.descripcio.length > 50 ? '...' : ''}}</td>
+            <!--<td class="text-center paddingtop20">{{product.preu}}</td>
+            <td class="text-center paddingtop20">{{product.tipus}}</td>-->
+            <td class="text-center paddingtop20"><i class="fa fa-check green-icon" ng-if="product.actiu == true" aria-hidden="true"></i> <i class="fa fa-times red-icon" ng-if="product.actiu != true" aria-hidden="true"></i></td>
+
+
+            <td class="text-center paddingtop20">{{product.data_creacio | date:'longDate'}} </td>
+            <td class="text-center paddingtop20">{{product.usuari}}</td>
+            <td class="text-center">
+              <a href="" id="editButton{{$index}}">
+                <span class="glyphicon glyphicon-edit blue-icon" title="Editar producte" ng-click="bonGustMainCtrl.productModObj=product" data-toggle="modal" data-target="#newUpdateProductModal"></span>
+              </a>
+              <br/>
+              <a href="" id="deteleButton{{$index}}" ng-click="bonGustMainCtrl.deleteProduct(product)">
+                <span class="glyphicon glyphicon-remove blue-icon" title="Eliminar producte"></span>
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

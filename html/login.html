@@ -1,0 +1,69 @@
+<div class="modal2" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: block;" ng-controller="bonGustSessionController as bonGustSessionCtrl" ng-init="bonGustSessionCtrl.checkUserLoginConnected(); posicionarTop()">
+
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header" align="center">
+                <img class="img-circle" id="img_logo" src="images/bongust_logo3.png">
+            </div>
+
+            <!-- Begin # DIV Form -->
+            <div id="div-forms">
+                <!-- Begin # Login Form -->
+                <form id="login-form" name="loginForm" ng-submit="bonGustSessionCtrl.logIn()">
+
+                    <div class="modal-body">
+
+                        <div id="div-login-msg">
+                            <div id="icon-login-msg" class="glyphicon glyphicon-chevron-right"></div>
+                            <span id="text-login-msg">Type your username and password.</span>
+                        </div>
+
+                        <div class="form-group">
+                            <md-input-container class="icon-float md-block custom">
+
+                                <label>Usuario</label>
+                                <input type="text"  id="recipient-name" name="user" ng-model="bonGustSessionCtrl.user.usuari" required>
+
+                                <div ng-messages="loginForm.name.$error">
+                                    <div ng-message="required">Este campo es requerido.</div>
+                                </div>
+
+                            </md-input-container>
+                        </div>
+
+
+                        <div class="form-group">
+                            <md-input-container class="icon-float md-block custom">
+
+                                <label>Contraseña</label>
+                                <input type="password"  id="recipient-name" name="password" ng-model="bonGustSessionCtrl.user.passwd"  required>
+
+                                <div ng-messages="loginForm.name.$error">
+                                    <div ng-message="required">Este campo es requerido.</div>
+                                </div>
+
+                            </md-input-container>
+                        </div>
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <div>
+                            <button type="submit" class="btn btn-primary btn-lg btn-block customButton">Enviar</button>
+                        </div>
+                    </div>
+                </form>
+                <!-- End # Login Form -->
+            </div>
+            <!-- End # DIV Form -->
+
+        </div>
+    </div>
+
+</div>
+
+<!-- END # MODAL LOGIN -->
+<div layout="row" id="completeQuery" class="completeHideDiv" layout-sm="column" layout-align="space-around">
+    <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+</div>

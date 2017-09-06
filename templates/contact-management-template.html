@@ -1,0 +1,24 @@
+<h1> Gestió de contacte </h1>
+<h2 class="text-center"><i>Canvi de correu electrònic</i></h2>
+<form role="form" id="newModContactForm" name="newModContactForm" ng-submit="bonGustMainCtrl.changeContactEmail()" >
+                         <!--{{newModAdminForm.$invalid}}
+                            {{newModAdminForm.$valid}}-->
+                         
+<div class="form-group">
+  <div class="col-sm-4">
+
+    <label for="seccio">Correu electrònic</label>
+    <p class="input-group">
+      <input type="email" class="form-control" name="email" ng-model="$parent.contactEmail" tooltip="El email no pot contenir més de 60 carácters." tooltip-trigger="focus" ng-minlength="1" ng-maxlength="60" placeholder="Email amb format proba@proba.com" required />
+    
+        
+    
+      <span class="input-group-btn">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+      </span>
+    </p>
+  </div>
+    
+
+</div>
+</form>

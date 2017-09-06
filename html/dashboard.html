@@ -1,0 +1,542 @@
+﻿<div class="row">
+    <div class="col-md-12">
+        <div class="quisomdes titol text-center">
+            <h1> Panell d'administració </h1>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid" ng-init="bonGustMainCtrl.sessionController()">
+    <div class="row">
+
+        <div class="col-md-3 margintop40 bg-gray">
+
+            <a href="" ng-click="bonGustMainCtrl.logout()" style="float:left;">Tancar sessió</a><br>
+            <ul id="administracio">
+
+                <li class="menu-title">DASHBOARD</li>
+
+                <li class="menu-admin">
+                    <a href="" ng-click="bonGustMainCtrl.changeTemplate('news')"><i class="fa fa-tag" aria-hidden="true"></i> ADMINISTRACIO DE NOTICIES (Slider/News)</a>
+                </li>
+
+                <!-- <li class="menu-admin">
+                    <a href="" ng-click="bonGustMainCtrl.changeTemplate('categories')"><i class="fa fa-tag" aria-hidden="true"></i> ADMINISTRACIO DE CATEGORIES</a>
+                </li> -->
+
+                <li class="menu-admin">
+                    <a href="" ng-click="bonGustMainCtrl.changeTemplate('products')"><i class="fa fa-tag" aria-hidden="true"></i> ADMINISTRACIO DE PRODUCTES</a>
+                </li>
+
+                <li class="menu-admin">
+                    <a href="" ng-click="bonGustMainCtrl.changeTemplate('contact')"><i class="fa fa-tag" aria-hidden="true"></i> CONFIGURACIO CONTACTE</a>
+                </li>
+            </ul>
+
+        </div>
+
+
+        <div class="col-md-9 col-sm-12 col-xs-12 text-center">
+
+            <news-management-template id="newsManagementTemplate" ng-if="$parent.showNewsTemplate==true"></news-management-template>
+            <!--<categories-management-template id="categoriesManagementTemplate" ng-if="$parent.showCategoriesTemplate==true"></categories-management-template>-->
+            <products-management-template id="productsManagementTemplate" ng-if="$parent.showProductsTemplate==true"></products-management-template>
+            <contact-management-template id="contactManagementTemplate" ng-if="$parent.showContactTemplate==true"></contact-management-template>
+
+            <!--**************************************** NOTICES ************************************* -->
+
+            <!-- START NEWS UPDATE -->
+            <div id="newModDiv">
+                <modal title="Edicio de notícia" id="newModModal" class="modal fade">
+                    <div class="modal-content">
+
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Modificació de notícia</h4>
+                        </div>
+
+                        <div class="modal-body">
+                            <form role="form" id="newModForm" name="newModAdminForm" ng-submit="bonGustMainCtrl.newModify()" >
+
+                                <div class="form-group">
+                                    <div class="col-sm-4">
+                                        <label for="seccio">Seccio</label>
+                                        <select id='sectionSelected' class="form-control" ng-model="bonGustMainCtrl.newModObj.seccio.id" required>
+                                            <option id="seccio{{$index}}" value="{{s.id}}"  ng-repeat="s in bonGustMainCtrl.seccionsArray">{{s.seccio}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-sm-4">
+                                        <label for="titol">Titol</label>
+                                        <input type="text" class="form-control" id="titol" ng-model="bonGustMainCtrl.newModObj.titol" tooltip="El títol no pot contenir més de 60 carácters." tooltip-trigger="focus" ng-minlength="1" ng-maxlength="60" placeholder="Introdueix el titol" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-sm-4">
+                                        <label for="data_noticia">Data de notícia</label>
+                                        <p class="input-group">
+                                        <!--{{bonGustMainCtrl.newModObj.data_noticia}}-->
+                                        
+                                            <input type="text"  id="dataModNoticia" class="form-control" uib-datepicker-popup="{{format}}" is-open="popup1.opened" datepicker-options="dateOptions" close-text="Close" alt-input-formats="altInputFormats" ng-model="bonGustMainCtrl.newModObj.data_noticia" required/>
+                                            <span class="input-group-btn">
+                                                <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+                                            </span>
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-sm-4">
+                                        <label for="noticia">Notícia</label>
+                                        <textarea rows="4" cols="50" class="form-control" id="noticia" ng-model="bonGustMainCtrl.newModObj.noticia" tooltip="La notícia no pot contenir més de 100 carácters" tooltip-trigger="focus" placeholder="Introdueix una notícia"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-sm-4">
+                                        <label for="descripcio">Descripció (o link)</label>
+                                        <textarea rows="4" cols="50" class="form-control" id="descripció" ng-model="bonGustMainCtrl.newModObj.descripcio" ng-maxlength="100" tooltip="La descripció no pot contenir més de 100 carácters" tooltip-trigger="focus"  placeholder="Introdueix una descripció curta" ></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div id="imgSlider" class="col-sm-4">
+                                        <label for="imatge">Imatge Noticia</label>
+                                        <input type="file" file="image" class="form-control" id="imgModNew" accept="image/*" ng-model="bonGustMainCtrl.newModObj.img_slider" ng-maxlength="9" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-sm-4">
+                                        <label>Vista Previa</label>
+                                        <div class="titulo">
+                                            <span id="infoTamaño"></span>
+                                        </div>
+
+                                        <div id="marcoVistaPrevia">
+                                            <img id="vistaPrevia" src="{{imgNewUrl}}{{bonGustMainCtrl.newModObj.img_noticia}}" alt="" width="150" height="80"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-sm-4">
+                                        <label for="subtitol">Subtitol</label>
+                                        <input type="text" class="form-control" id="subtitol" ng-model="bonGustMainCtrl.newModObj.subtitol" ng-maxlength="250" tooltip="El subtítol no pot contenir més de 60 carácters" tooltip-trigger="focus" placeholder="Introdueix un subtítol" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-sm-4">
+                                        <label for="address">Actiu</label><br/>
+                                        <input type="checkbox" id="actiuCheckbox" ng-model="bonGustMainCtrl.newModObj.actiu" tooltip="Marcar si es vol que la notícia estigui activa" tooltip-trigger="focus" />
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <hr>
+                                    </div>
+                                </div>
+
+                                <div class="bs-example" ng-if="signUpError">
+                                    <div class="alert alert-danger">
+                                        <strong>Error!</strong> - {{signUpErrorMsg}}
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-xs-4">
+                                        <button type="submit" class="btn btn-primary">Guardar</button>
+                                        <button type="button" class="btn btn-warning" data-dismiss="modal">Cancel·lar</button>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+
+                    </div>
+                </modal>
+            </div>
+            <!-- END NEWS UPDATE -->
+
+            <!-- START NEWS INSERT -->
+            <div id="newNewsDiv">
+                <modal title="Edicio de notícia" id="newNewsModal" class="modal fade" tabindex="-1">
+                    <div class="modal-content">
+
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Nova notícia</h4>
+                        </div>
+
+                        <div class="modal-body">
+                            <form role="form" id="newForm" name="newForm" ng-submit="bonGustMainCtrl.addNewNews()" novalidate>
+
+                                <div class="form-group">
+                                    <div class="col-sm-4">
+                                        <label for="seccio">Seccio</label>
+                                        <select id='sectionSelected' class="form-control" ng-model="bonGustMainCtrl.newNews.seccio.id" required>
+                                            <option id="seccio{{$index}}" value="{{s.id}}"  ng-repeat="s in bonGustMainCtrl.seccionsArray">{{s.seccio}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-sm-4">
+                                        <label for="titol">Titol</label>
+                                        <input type="text" class="form-control" id="titol" ng-model="bonGustMainCtrl.newNews.titol" tooltip="El títol no pot contenir més de 60 carácters." tooltip-trigger="focus" ng-minlength="1" ng-maxlength="60" ng-pattern="" placeholder="Introdueix el titol" required />
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-sm-4">
+                                        <label for="data_noticia">Data de notícia</label>
+
+                                        <p class="input-group">
+                                            <!-- <input datepicker name="idTourDateDetails" id="idTourDateDetails" readonly="readonly" class="form-control clsDatePicker" ng-model="bonGustMainCtrl.newNews.data_noticia"/> <span class="input-group-addon"><i id="calIconTourDateDetails" class="glyphicon glyphicon-th"></i></span> -->
+                                            <input type="text"  id="data_noticia" class="form-control" uib-datepicker-popup="{{format}}" is-open="popup1.opened" datepicker-options="dateOptions" close-text="Close" alt-input-formats="altInputFormats" ng-model="bonGustMainCtrl.newNews.data_noticia" required/>
+                                            <span class="input-group-btn">
+                                                <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+                                            </span>
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-sm-4">
+                                        <label for="descripcio_curta">Notícia</label>
+                                        <textarea rows="8" cols="50" class="form-control" id="noticia" ng-model="bonGustMainCtrl.newNews.noticia" tooltip="La notícia no pot contenir més de 100 carácters" tooltip-trigger="focus" placeholder="Introdueix una notícia" required></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-sm-4">
+                                        <label for="descripcio_curta">Descripció</label>
+                                        <textarea rows="8" cols="50" class="form-control" id="descripcio" ng-model="bonGustMainCtrl.newNews.descripcio" ng-maxlength="2000" tooltip="La descripció no pot contenir més de 2000 carácters" tooltip-trigger="focus" placeholder="Introdueix una descripció" ></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div id="imgSlider2" class="col-sm-4">
+                                        <label for="img_slider">Imatge Noticia</label>
+                                        <input type="file" file="image" class="form-control" id="img_new2" accept="image/*" ng-model="bonGustMainCtrl.newNews.img_noticia" ng-maxlength="9"/>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-sm-4">
+                                        <label>Vista Previa</label>
+                                        <div class="titulo">
+                                            <span id="infoTamaño"></span>
+                                        </div>
+
+                                        <div id="marcoVistaPrevia">
+                                            <img id="vistaPrevia2" src="" alt="" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-sm-4">
+                                        <label for="subtitol">Subtitol</label>
+                                        <input type="text" class="form-control" id="subtitol" ng-model="bonGustMainCtrl.newNews.subtitol" ng-maxlength="300" tooltip="El subtítol no pot contenir més de 60 carácters" tooltip-trigger="focus" placeholder="Introdueix un subtítol" required/>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-sm-4">
+                                        <label for="address">Actiu</label><br/>
+                                        <input type="checkbox" id="actiuNewCheckbox" tooltip="Marcar si es vol que la notícia estigui activa" tooltip-trigger="focus" ng-click="bonGustMainCtrl.newNews.actiu=1" />
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <hr>
+                                    </div>
+                                </div>
+
+                                {{newForm.$invalid}}
+                                {{newForm.$valid}}
+
+                                <div class="bs-example" ng-if="signUpError">
+                                    <div class="alert alert-danger">
+                                        <strong>Error!</strong> - {{signUpErrorMsg}}
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-xs-4">
+                                        <button type="submit" ng-disabled="newForm.$invalid" class="btn btn-primary">Guardar</button>
+                                        <button type="button" class="btn btn-warning" data-dismiss="modal" ng-click="bonGustMainCtrl.resetNewNews()">Cancel·lar</button>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+
+                    </div>
+                </modal>
+            </div>
+            <!-- END NEWS INSERT -->
+
+            <!--**************************************** PRODUCTES ************************************* -->
+
+            <!-- START PRODUCT INSERT -->
+            <div id="newProductDiv">
+                <modal title="Creació de producte" id="newProductModal" class="modal fade" tabindex="-1">
+                    <div class="modal-content">
+
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Nou producte</h4>
+                        </div>
+
+                        <div class="modal-body">
+                            <form role="form" id="productForm" name="productForm" ng-submit="bonGustMainCtrl.addNewProduct()">
+
+                                <div class="form-group" showErrors>
+                                    <div class="col-sm-4">
+                                        <label for="codi">Codi</label>
+                                        <input type="text" class="form-control" id="codi" name="codi" ng-model="bonGustMainCtrl.newProduct.codi" tooltip="El codi no pot contenir més de 20 carácters." tooltip-trigger="focus" ng-minlength="1" ng-maxlength="20" ng-pattern="/^[a-zA-Z0-9]+$/" placeholder="Introdueix el codi" required />
+                                    </div>
+                                </div>
+
+                                <div class="form-group" showErrors>
+                                    <div class="col-sm-4">
+                                        <label for="categoria">Categoria</label>
+                                        <select id='categorySelected' class="form-control" ng-model="bonGustMainCtrl.newProduct.categoria" required>
+                                            <option id="categoria{{$index}}" value="{{s.id}}"  ng-repeat="s in categoriesArray">{{s.ca_nom}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group" showErrors>
+                                    <div class="col-sm-4">
+                                        <label for="subcategoria">Subcategoria</label>
+                                        <select id='subcategorySelected' class="form-control" ng-model="bonGustMainCtrl.newProduct.subcategoria" required>
+                                            <option id="subCategoria{{$index}}" value="{{sb.id}}"  ng-repeat="sb in subCategoriesArray">{{sb.ca_nom}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group" showErrors>
+                                    <div class="col-sm-4">
+                                        <label for="nomProduct">Nom</label>
+                                        <input type="text" class="form-control" id="nomProduct" ng-model="bonGustMainCtrl.newProduct.nom" tooltip="El Nom no pot contenir més de 100 carácters." tooltip-trigger="focus" ng-minlength="1" ng-maxlength="100" placeholder="Introdueix el nom" required />
+                                    </div>
+                                </div>
+
+                                <div class="form-group" showErrors>
+                                    <div class="col-sm-4">
+                                        <label for="infoProduct">Info</label>
+                                        <textarea rows="8" cols="50" class="form-control" id="infoProduct" ng-model="bonGustMainCtrl.newProduct.info" ng-maxlength="300" tooltip="La Informació no pot contenir més de 300 carácters" tooltip-trigger="focus" placeholder="Introdueix la informació" required></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="form-group" showErrors>
+                                    <div class="col-sm-4">
+                                        <label for="descripcioProducte">Descripció</label>
+                                        <textarea rows="8" cols="50" class="form-control" id="descripcioProduct" ng-model="bonGustMainCtrl.newProduct.descripcio" ng-maxlength="1500" tooltip="La descripció no pot contenir més de 1500 carácters" tooltip-trigger="focus" placeholder="Introdueix una descripció" required></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="form-group" showErrors>
+                                    <div class="col-sm-4">
+                                        <label for="preuProducte">Preu</label>
+                                        <input type="text" class="form-control" id="preuProduct" ng-model="bonGustMainCtrl.newProduct.preu" tooltip="El preu no pot contenir carácters alfanumerics o especials" tooltip-trigger="focus" ng-minlength="1" ng-maxlength="60" ng-pattern="/^[0-9]+([,.][0-9]+)?$/" placeholder="Introdueix el preu" required />
+                                    </div>
+                                </div>
+
+                                <div class="form-group" showErrors>
+                                    <div class="col-sm-4">
+                                        <label for="tipus">Tipus</label>
+                                        <select id='typeSelected' class="form-control" ng-model="bonGustMainCtrl.newProduct.tipus" required>
+                                            <option id="type{{$index}}" value="{{type}}"  ng-repeat="type in typePriceArray">{{type}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group" showErrors>
+                                    <div id="imgProduct" class="col-sm-4">
+                                        <label for="img_slider">Imatge</label>
+                                        <input type="file" file="image" class="form-control" id="imgNewProduct" accept="image/*" ng-model="bonGustMainCtrl.newProduct.imatge" ng-maxlength="9"/>
+                                    </div>
+                                </div>
+
+                                <div class="form-group" showErrors>
+                                    <div class="col-sm-4">
+                                        <label for="productActiu">Actiu</label><br/>
+                                        <input type="checkbox" id="actiuProductCheckbox" tooltip="Marcar si es vol que el producte estigui actiu" tooltip-trigger="focus" ng-click="bonGustMainCtrl.newProduct.actiu=1" />
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <hr>
+                                    </div>
+                                </div>
+
+                                {{productForm.$invalid}}
+                                {{productForm.$valid}}
+
+                                <div class="bs-example" ng-if="signUpError">
+                                    <div class="alert alert-danger">
+                                        <strong>Error!</strong> - {{signUpErrorMsg}}
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-xs-4">
+                                        <button type="submit" ng-disabled="productForm.$invalid" class="btn btn-primary">Guardar</button>
+                                        <button type="button" class="btn btn-warning" data-dismiss="modal" ng-click="bonGustMainCtrl.resetNewProduct()">Cancel·lar</button>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+
+                    </div>
+                </modal>
+            </div>
+            <!-- END PRODUCT INSERT -->
+            <div id="newModDiv">
+              <modal title="Modificació de producte" id="newUpdateProductModal" class="modal fade" tabindex="-1">
+                  <div class="modal-content">
+
+                      <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal">&times;</button>
+                          <h4 class="modal-title">Modificar producte</h4>
+                      </div>
+
+                      <div class="modal-body">
+                          <form role="form" id="productModForm" name="productModForm" ng-submit="bonGustMainCtrl.productModify()" novalidate>
+
+                              <div class="form-group">
+                                  <div class="col-sm-4">
+                                      <label for="codi">Codi</label>
+                                      <input type="text" class="form-control" id="codi" ng-model="bonGustMainCtrl.productModObj.codi" tooltip="El codi no pot contenir més de 20 carácters." tooltip-trigger="focus" ng-minlength="1" ng-maxlength="20" ng-pattern="/^[a-zA-Z0-9]+$/" placeholder="Introdueix el codi" required />
+                                  </div>
+                              </div>
+
+                              <div class="form-group">
+                                  <div class="col-sm-4">
+                                      <label for="categoria">Categoria</label>
+                                      <select id='categorySelected' class="form-control" ng-model="bonGustMainCtrl.productModObj.categoria" required>
+                                          <option id="categoria{{$index}}" value="{{s.id}}"  ng-repeat="s in categoriesArray">{{s.ca_nom}}</option>
+                                      </select>
+                                  </div>
+                              </div>
+
+                              <div class="form-group">
+                                  <div class="col-sm-4">
+                                      <label for="subcategoria">Subcategoria</label>
+                                      <select id='subcategorySelected' class="form-control" ng-model="bonGustMainCtrl.productModObj.subcategoria" required>
+                                          <option id="subCategoria{{$index}}" value="{{sb.id}}"  ng-repeat="sb in subCategoriesArray">{{sb.ca_nom}}</option>
+                                      </select>
+                                  </div>
+                              </div>
+
+                              <div class="form-group">
+                                  <div class="col-sm-4">
+                                      <label for="nomProduct">Nom</label>
+                                      <input type="text" class="form-control" id="nomProduct" ng-model="bonGustMainCtrl.productModObj.nom" tooltip="El Nom no pot contenir més de 100 carácters." tooltip-trigger="focus" ng-minlength="1" ng-maxlength="100"  placeholder="Introdueix el nom" required />
+                                  </div>
+                              </div>
+
+                              <div class="form-group">
+                                  <div class="col-sm-4">
+                                      <label for="infoProduct">Info</label>
+                                      <textarea rows="8" cols="50" class="form-control" id="infoProduct" ng-model="bonGustMainCtrl.productModObj.info" ng-maxlength="300" tooltip="La Informació no pot contenir més de 300 carácters" tooltip-trigger="focus"  placeholder="Introdueix la informació" required></textarea>
+                                  </div>
+                              </div>
+
+                              <div class="form-group">
+                                  <div class="col-sm-4">
+                                      <label for="descripcioProducte">Descripció</label>
+                                      <textarea rows="8" cols="50" class="form-control" id="descripcioProduct" ng-model="bonGustMainCtrl.productModObj.descripcio" ng-maxlength="1500" tooltip="La descripció no pot contenir més de 1500 carácters" tooltip-trigger="focus" placeholder="Introdueix una descripció" required></textarea>
+                                  </div>
+                              </div>
+
+                              <div class="form-group">
+                                  <div class="col-sm-4">
+                                      <label for="preuProducte">Preu</label>
+                                      <input type="text" class="form-control" id="preuProduct" ng-model="bonGustMainCtrl.productModObj.preu" tooltip="El preu no pot contenir carácters alfanumerics o especials" tooltip-trigger="focus" ng-minlength="1" ng-maxlength="60" ng-pattern="/^[0-9]+([,.][0-9]+)?$/" placeholder="Introdueix el preu" required />
+                                  </div>
+                              </div>
+
+                              <div class="form-group">
+                                  <div class="col-sm-4">
+                                      <label for="tipus">Tipus</label>
+                                      <select id='typeSelected' class="form-control" ng-model="bonGustMainCtrl.productModObj.tipus" required>
+                                          <option id="type{{$index}}" value="{{type}}"  ng-repeat="type in typePriceArray">{{type}}</option>
+                                      </select>
+                                  </div>
+                              </div>
+
+                              <div class="form-group">
+                                  <div id="imgProduct" class="col-sm-4">
+                                      <label for="img_slider">Imatge</label>
+                                      <input type="file" file="image" class="form-control" id="imgModProduct" accept="image/*" ng-model="bonGustMainCtrl.productModObj.imatge" ng-maxlength="9"/>
+                                  </div>
+                              </div>
+
+                              <div class="form-group">
+                                  <div class="col-sm-4">
+                                      <label>Vista Previa</label>
+                                      <div class="titulo">
+                                          <span id="infoTamaño"></span>
+                                      </div>
+
+                                      <div id="marcoVistaPrevia">
+                                          <img id="vistaPreviaModProduct" src="{{imgProductUrl}}{{bonGustMainCtrl.productModObj.imatge}}" width="150" height="80" alt="" />
+                                      </div>
+                                  </div>
+                              </div>
+
+                              <div class="form-group">
+                                  <div class="col-sm-4">
+                                      <label for="productActiu">Actiu</label><br/>
+                                      <input type="checkbox" id="actiuModProductCheckbox" ng-model="bonGustMainCtrl.productModObj.actiu" tooltip="Marcar si es vol que el producte estigui actiu" tooltip-trigger="focus" />
+                                      {{bonGustMainCtrl.productModObj.actiu}}
+                                  </div>
+                              </div>
+
+                              <div class="row">
+                                  <div class="col-xs-12">
+                                      <hr>
+                                  </div>
+                              </div>
+
+                              {{productForm.$invalid}}
+                              {{productForm.$valid}}
+
+                              <div class="bs-example" ng-if="signUpError">
+                                  <div class="alert alert-danger">
+                                      <strong>Error!</strong> - {{signUpErrorMsg}}
+                                  </div>
+                              </div>
+
+                              <div class="row">
+                                  <div class="col-xs-4">
+                                      <button type="submit" class="btn btn-primary">Guardar</button>
+                                      <button type="button" class="btn btn-warning" data-dismiss="modal">Cancel·lar</button>
+                                  </div>
+                              </div>
+
+                          </form>
+                      </div>
+
+                  </div>
+              </modal>
+            </div>
+
+            <!-- END PRODUCT UPDATE -->
+
+        </div>
+    </div> <!-- End row -->
+</div> <!-- End cointainer-fluid -->

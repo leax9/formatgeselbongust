@@ -1,0 +1,164 @@
+body {
+    font-family: 'Open Sans';
+}
+
+li.pestanyes > a{
+    color: blue !important;
+}
+
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover{
+    background: blue !important;
+    color: white !important;
+}
+
+.nav-tabs>li>a:hover{
+    background: cyan !important;
+    color: black;
+}
+
+.btn_exit{
+  background: blue;
+    color: white;
+    height: 50px;
+    width: 100px;
+    border: none;
+  
+}
+
+.nom_usuari{
+    float: left;
+    height: 50px;
+    padding: 15px 15px;
+    font-size: 18px;
+    line-height: 20px;
+    color: yellow;
+}
+
+
+h2 {
+    background-color: #D5C7E0;
+    padding: 5px;
+    text-decoration: underline;
+}
+
+table thead td:first-line {
+    font-size: 11px;
+}
+
+
+/* INPUT FILES STYLES */
+.thumb {
+    width: 150px;
+    height: 150px;
+    float: none;
+    position: relative;
+    top: 0px;
+}
+
+form .progress {
+    line-height: 15px;
+}
+
+
+.progress {
+    display: inline-block;
+    width: 100px;
+    border: 3px groove #CCC;
+}
+
+.progress div {
+    font-size: smaller;
+    background: orange;
+    width: 0;
+}
+/* END INPUT FILES STYLES */
+
+.titulo{ font-size: 10pt; font-weight: normal; height: 30pt;}
+#marcoVistaPrevia{
+    border: 1px dashed black;
+    width: 150px;
+    height: 100px;
+}
+#vistaPrevia{
+    max-width: 150px;
+    max-height: 100px;            
+}
+
+#vistaPrevia2{
+    max-width: 150px;
+    max-height: 100px;            
+}
+
+/* CSS FOR ANGULAR VALIDATION TEXTFIELDS*/
+.ng-invalid.ng-dirty
+{
+  border-color:red
+}
+
+.ng-valid.ng-dirty
+{
+  border-color:green
+}
+
+
+.modal-header {
+    padding: 15px;
+    border-bottom: 1px solid #e5e5e5;
+    background-color: #D5C7E0;
+}
+
+md-backdrop.md-select-backdrop {
+z-index:103;
+}
+
+.md-select-menu-container {
+z-index:104;
+}
+
+.clsDatePicker {
+    z-index: 100000 !important;
+}
+
+
+/*#val {
+    width: 400px;
+    height:25px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size:13px;
+    line-height: 25px;
+    text-indent: 10px;
+    pointer-events: none;
+}
+#button {
+    cursor: pointer;
+    display: block;
+    width: 90px;
+    background-color: purple;
+    height:24px;
+    color: white;
+    position: absolute;
+    right:0;
+    top: 0;
+    font-size: 11px;
+    line-height:25px;
+    text-align: center;
+    -webkit-transition: 500ms all;
+    -moz-transition: 500ms all;
+    transition: 500ms all;
+}
+
+#button:hover {
+    background-color: blue;
+}
+
+#imgSlider2 {
+    /*padding-top: 30px;*/
+    /*width: 400px;
+    height: 25px;
+    background-color: white;
+    box-shadow: 1px 2px 3px #ededed;
+    position:relative;
+    border: 1px solid #d8d8d8;
+}

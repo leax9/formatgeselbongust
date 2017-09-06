@@ -1,0 +1,62 @@
+<div class="row">
+
+	<div class="table-condensed table-responsive col-md-12 col-sm-12 col-xs-12">
+
+		<div class="col-md-12 text-center margintop20 marginbot40">
+			<input class="seaching" ng-model="searchNews" placeholder="Busca la noticia...">
+		</div>
+
+		<div class="col-md-12">
+			<div class="col-md-10 ">
+					<span>(SELECCIONAN <strong>SIS</strong> DE LA TAULA I PREM GUARDAR)
+						<input type="Button" name="saveButton" id="saveButtonId" value="Guardar" ng-click="bonGustMainCtrl.changeSliderAndNewsImages()" ng-disabled="((activeCheckboxSliderArray.length!=3 && activeCheckboxNewsArray.length!=3) || (activeCheckboxSliderArray.length!=3 || activeCheckboxNewsArray.length!=3))" class="btn btn-primary pull-right"/>
+					</span>
+				</p>
+			</div>
+
+			<div class="col-md-2 col-sm-12 col-xs-12">
+				<button type="button" class="btn btn-success pull-right" ng-click="open2()" data-toggle="modal" data-target="#newNewsModal"><i class="glyphicon glyphicon-plus-sign"></i> Nova notícia</button>
+			</div>
+		</div>
+		<div class="col-md-12">
+			<table class="table table-hover" style="border: 1px solid black;">
+			 	<thead>
+			        <tr>
+			            <th class="text-center">ID</th>
+			            <th class="text-center">SECCIO</th>
+			            <th class="text-center">TITOL</th>
+			            <th class="text-center">SLIDER IMG</th>
+			            <th class="text-center">NOTICIA IMG</th>
+			            <th class="text-center">DATA CREACIO</th>
+			            <th class="text-center">DATA NOTICIA</th>
+			            <th class="text-center">ESTAT</th>
+			            <th class="text-center">USUARI</th>
+			            <th class="text-center">ACCIONS</th>
+			        </tr>
+			    </thead>
+			    <tbody>
+			        <tr ng-repeat="new in totalNewsArray | filter:searchNews" id="noticia{{$index}}" class="dades">
+			            <td class="text-center paddingtop20">{{new.id}}</td>
+			            <td class="text-center paddingtop20">{{new.seccio.seccio}}</td>
+			            <td class="text-center paddingtop20">{{new.titol}}</td>
+			            <td class="text-center paddingtop20">{{new.img_slider}}</td>
+			            <td class="text-center paddingtop20">{{new.img_noticia}}</td>
+			            <td class="text-center paddingtop20">{{new.data_creacio | date:'longDate'}}</td>
+			            <td class="text-center paddingtop20">{{new.data_noticia | date:'longDate'}}</td>
+			            <td class="text-center paddingtop20"><i class="fa fa-check green-icon" ng-if="new.actiu == true" aria-hidden="true"></i> <i class="fa fa-times red-icon" ng-if="new.actiu != true" aria-hidden="true"></i></td>
+			            <td class="text-center paddingtop20">{{new.usuari}}</td> <!-- Printar nom -->
+			            <td class="text-center">
+			            	<a href="" id="editButton{{$index}}">
+			            		<span class="glyphicon glyphicon-edit blue-icon" title="Editar notícia" ng-click="bonGustMainCtrl.newModObj=new" data-toggle="modal" data-target="#newModModal"></span>
+			            	</a>
+			            	<br/>
+			            	<a href="" id="deteleButton{{$index}}" ng-click="bonGustMainCtrl.deleteNew(new)">
+			            		<span class="glyphicon glyphicon-remove blue-icon" title="Eliminar notícia"></span>
+			            	</a>
+			            </td>
+			        </tr>
+			    </tbody>
+			</table>
+		</div>
+	</div>
+</div>
