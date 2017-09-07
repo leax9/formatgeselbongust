@@ -11,7 +11,7 @@ class BDBonGust extends mysqli
 		parent::__construct(
 			"localhost",
 			"root",
-			"root",
+			"",
 			"formatgeselbongust"
 		);
 		

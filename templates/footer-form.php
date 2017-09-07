@@ -31,10 +31,10 @@
 				<div class="widget">
 					<h4 class="widgetheading"> {{constant.seccions}} </h4>
 					<ul class="link-list">
-						<li class="links-menu"><a href="#quisom"> {{constant.quiSom}} </a></li>
-						<li class="links-menu"><a href="#noticies"> {{constant.nostresNoticies}} </a></li>
-						<li class="links-menu"><a href="#cataleg-productes"> {{constant.productes}} </a></li>
-						<li class="links-menu"><a href="#contacte"> {{constant.contacte2}} </a></li>
+						<li class="links-menu"><a ui-sref="quisom" ng-click="posicionarTop()"> {{constant.quiSom}} </a></li>
+						<li class="links-menu"><a ui-sref="noticies" ng-click="posicionarTop()"> {{constant.nostresNoticies}} </a></li>
+						<li class="links-menu"><a ui-sref="cataleg" ng-click="posicionarTop()"> {{constant.productes}} </a></li>
+						<li class="links-menu"><a ui-sref="contacte" ng-click="posicionarTop()"> {{constant.contacte2}} </a></li>
 					</ul>
 				</div>
 			</div>

@@ -63,7 +63,7 @@
 
 
 			<div class="col-lg-12 col-md-12 col-xs-12 margintop10 text-right">
-				<button class="read " ui-sref="noticiaDetalls({id: new.id, type: 'allNews'})">Seguir llegint</button>
+				<button class="read " ui-sref="noticiaDetalls({id: new.id, type: 'allNews'})">{{constant.seguirLlegint}}</button>
 			</div>
 
 		</div>

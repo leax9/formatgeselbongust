@@ -13,7 +13,7 @@
 
 		<div class="carousel-inner">
 
-			<div class="item active"> <img ng-src="{{imgSliderUrl}}{{imgSliderArray[0].img_slider}}" class="img-responsive" alt="First slide">
+			<div class="item active"> <img ng-src="{{imgNewUrl}}{{imgSliderArray[0].img_slider}}" class="img-responsive" alt="First slide">
 
 				<div class="container">
 					<!-- Imatge 1 -->
@@ -32,7 +32,7 @@
 			</div>
 
 
-			<div class="item"> <img ng-src="{{imgSliderUrl}}{{imgSliderArray[1].img_slider}}" class="img-responsive" alt="Second slide">
+			<div class="item"> <img ng-src="{{imgNewUrl}}{{imgSliderArray[1].img_slider}}" class="img-responsive" alt="Second slide">
 
 				<div class="container">
 					<!-- Imatge 2 -->
@@ -50,7 +50,7 @@
 			</div>
 
 
-			<div class="item"> <img ng-src="{{imgSliderUrl}}{{imgSliderArray[2].img_slider}}" class="img-responsive" alt="Third slide">
+			<div class="item"> <img ng-src="{{imgNewUrl}}{{imgSliderArray[2].img_slider}}" class="img-responsive" alt="Third slide">
 
                 <div class="container">
                     <!-- Imatge 3 -->
@@ -96,24 +96,13 @@
 			<div class="col-md-4 col-xs-12 text-center box-news-index" ng-repeat="image in imgNewsArray">
 				<!-- Títol i descripció curta -->
 				<div class="col-md-12 marginbot20 box-title">
-					<!--<p class="title_box"><a ui-sref="noticiaDetalls({id: image.id, type: 'noticia'})" ng-click="posicionarTop()"> {{image.titol}} </a></p>-->
 					<p class="title_box"><a href="#/{{image.descripcio}}" ng-click="posicionarTop()"> {{image.titol}} </a></p>
 				</div>
 				<div class="col-md-12" >
-					<!--<a ui-sref="producteDetalls({id: image.descripcio, type: 'producte'})">
-						<img class="news_circle" ng-src="{{imgNewUrl}}{{image.img_noticia}}">
-					</a>-->
 					<a href="#/{{image.descripcio}}">
 						<img class="news_circle" ng-src="{{imgNewUrl}}{{image.img_noticia}}">
 					</a>
-
 				</div>
-				<!--<div class="col-md-12" >
-					<p class="resum_box">
-						 {{image.descripcio | limitTo: 150}}
-					</p>
-				</div>
-				-->
 			</div>
 		</div>
 	</div>

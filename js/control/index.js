@@ -82,7 +82,8 @@ bonGustApp.constant('languageConstants', {
     producteNO: 'Cap producte trobat',
     producteNO2: 'No hi ha cap producte disponible ...',
     producteNO3: 'Cap producte disponible',
-    catalegProductes: 'cataleg-productes'
+    catalegProductes: 'cataleg-productes',
+    seguirLlegint: 'Seguir llegint'
   },
   castellano: {
     veure: 'VER',
@@ -155,7 +156,8 @@ bonGustApp.constant('languageConstants', {
     producteNO: 'Ningún producto encontrado',
     producteNO2: 'No hay ningún producto disponible ...',
     producteNO3: 'Ningún producto disponible',
-    catalegProductes: 'catalago-productos'
+    catalegProductes: 'catalago-productos',
+    seguirLlegint: 'Leer más'
   }
 });
 
@@ -191,11 +193,12 @@ bonGustApp.service('bonGustService', function () {
 
 bonGustApp.config(['$httpProvider', '$stateProvider', '$urlRouterProvider', 'languageConstants', function ($httpProvider, $stateProvider, $urlRouterProvider, languageConstants) {
   var constant = {};
-
-  if (localStorage.getItem("language") === 'cat') {
-    constant = languageConstants.catala;
-  } else {
+  
+  if (localStorage.getItem("language") === 'cast') {
+    
     constant = languageConstants.castellano;
+  } else {
+    constant = languageConstants.catala;
   }
 
   console.log(constant);
@@ -471,7 +474,7 @@ bonGustApp.controller("categoriaDetallsController", function ($scope, $sce, Uplo
 
       $scope.page = 1;
       $scope.displayItems = $scope.totalProductsArray.slice(0, 6);
-
+      console.log($scope.displayItems);
       $scope.pageChanged = function () {
         var startPos = ($scope.page - 1) * 6;
         $scope.displayItems = $scope.totalProductsArray.slice(startPos, startPos + 6);
@@ -596,6 +599,10 @@ bonGustApp.controller("bonGustMainController", function ($scope, $sce, Upload, $
   this.newProduct = new productObj(); //Objecte per a la nova notícia.
   this.productModObj = new productObj(); //Objecte producte a modificar.
   this.newProductObj = new productObj(); //Objecte per a la nova notícia.
+  this.languageArray = [
+    {id:0,language:'Català'},
+    {id:1,language:'Castellà'}
+  ];
 
   this.contact = {
     nom_cognoms: '',
@@ -622,6 +629,7 @@ bonGustApp.controller("bonGustMainController", function ($scope, $sce, Upload, $
   } else {
     $scope.currentLang = 0;
   }
+  this.selectedLang = ''+$scope.currentLang;
 
   //Data.update(true);
   //console.log('index.js');
@@ -924,7 +932,7 @@ bonGustApp.controller("bonGustMainController", function ($scope, $sce, Upload, $
       this.newNews.setDataNoticia($("#data_noticia").val());
       this.newNews.setSeccio(parseInt(this.newNews.getSeccio().id));
 
-
+      
       //alert(this.newNews.toString());
       var outPutData = [];
 
@@ -933,7 +941,7 @@ bonGustApp.controller("bonGustMainController", function ($scope, $sce, Upload, $
       $.ajax({
         url: "php/control/control.php",
         type: "POST",
-        data: "action=10050&JSONData=" + JSON.stringify(this.newNews),
+        data: "action=10050&JSONData=" + JSON.stringify(this.newNews)+"&language="+this.selectedLang,
         dataType: "json",
         beforeSend: function () {
 
@@ -992,13 +1000,24 @@ bonGustApp.controller("bonGustMainController", function ($scope, $sce, Upload, $
 
       this.newModObj.setImgNoticia(imagesNameArray[0]);
       this.newModObj.setImgSlider(imagesNameArray[0]);
-    }
+    } 
+    
+    // if (this.newModObj.seccio.id==1) {
+    //   newNameImgArray = [];
+    //   modNewImageNamesArray = [];
+    //   newNameImgArray.push(this.newModObj.getTitol());
+    //   modNewImageNamesArray.push(this.newModObj.getImgNoticia());
+    //   var imagesNameArray = this.imagesManagement(newNameImgArray, "changeNewToSlider", modNewImageNamesArray);
+
+    //   this.newModObj.setImgNoticia(imagesNameArray[0]);
+    //   this.newModObj.setImgSlider(imagesNameArray[0]);
+    // }
     var outPutData = [];
     this.newModObj = angular.copy(this.newModObj);
     $.ajax({
       url: "php/control/control.php",
       type: "POST",
-      data: "action=10051&JSONData=" + JSON.stringify(this.newModObj),
+      data: "action=10051&JSONData=" + JSON.stringify(this.newModObj)+'&language='+$scope.currentLang,
       dataType: "json",
       beforeSend: function () {
 
@@ -1069,7 +1088,7 @@ bonGustApp.controller("bonGustMainController", function ($scope, $sce, Upload, $
             $.ajax({
               url: "php/control/control.php",
               type: "POST",
-              data: "action=10030&newDeleteToId=" + JSON.stringify(newObj.id),
+              data: "action=10030&newDeleteToId=" + JSON.stringify(newObj.id)+'&language='+$scope.currentLang,
               dataType: "json",
               beforeSend: function () {
 
@@ -1139,7 +1158,7 @@ bonGustApp.controller("bonGustMainController", function ($scope, $sce, Upload, $
       $.ajax({
         url: "php/control/control.php",
         type: "POST",
-        data: "action=10055&JSONData=" + JSON.stringify(this.newProduct),
+        data: "action=10055&JSONData=" + JSON.stringify(this.newProduct)+'&language='+this.selectedLang,
         dataType: "json",
         beforeSend: function () {
           //$("#loadDiv").css("display","block");
@@ -1209,7 +1228,7 @@ bonGustApp.controller("bonGustMainController", function ($scope, $sce, Upload, $
     $.ajax({
       url: "php/control/control.php",
       type: "POST",
-      data: "action=10052&JSONData=" + JSON.stringify(this.productModObj),
+      data: "action=10052&JSONData=" + JSON.stringify(this.productModObj)+'&language='+this.selectedLang,
       dataType: "json",
       beforeSend: function () {
 
@@ -1287,7 +1306,7 @@ bonGustApp.controller("bonGustMainController", function ($scope, $sce, Upload, $
             $.ajax({
               url: "php/control/control.php",
               type: "POST",
-              data: "action=10031&productDeleteToId=" + JSON.stringify(productObj.id),
+              data: "action=10031&productDeleteToId=" + JSON.stringify(productObj.id)+'&language='+this.selectedLang,
               dataType: "json",
               beforeSend: function () {
                 //$("#loadDiv").css("display","block");
@@ -1335,6 +1354,43 @@ bonGustApp.controller("bonGustMainController", function ($scope, $sce, Upload, $
     var serverFileNames = [];
 
     switch (typeItem) {
+      case "changeNewToSlider":
+      
+        //Create image to slider folder
+        imageFiles = new FormData();
+        imageNamesArray = [];
+        image = null;
+        for (i = 0; i < newNamesImgArray.length; i++) {
+          imageNamesArray.push(newNamesImgArray[i]);
+          //image = $("#imgModNew")[0].files[0];
+          image = $scope.imgNewUrl+this.newModObj.img_noticia;
+          console.log(image);
+          imageFiles.append('images[]', image);
+
+          serverFileNames = [];
+
+          $.ajax({
+            url: 'php/control/controlFiles.php?action=10005&newsNamesArray=' + JSON.stringify(imageNamesArray),
+            type: 'POST',
+            async: false,
+            data: imageFiles,
+            dataType: "json",
+            //~ beforesend:
+            //~ complete:
+            processData: false,
+            contentType: false,
+            success: function (response) {
+              serverFileNames = response;
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+              alert(xhr.status + "\n" + thrownError);
+            }
+          });
+        }
+        break;
+      case "changeSliderToNew":
+        console.log("entra");
+        break;
       case "newNews":
         //Upload user new modified image.
         for (i = 0; i < newNamesImgArray.length; i++) {

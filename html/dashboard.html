@@ -119,6 +119,7 @@
                                         <div id="marcoVistaPrevia">
                                             <img id="vistaPrevia" src="{{imgNewUrl}}{{bonGustMainCtrl.newModObj.img_noticia}}" alt="" width="150" height="80"/>
                                         </div>
+                                        {{bonGustMainCtrl.newModObj.img_noticia}}
                                     </div>
                                 </div>
 
@@ -175,7 +176,14 @@
 
                         <div class="modal-body">
                             <form role="form" id="newForm" name="newForm" ng-submit="bonGustMainCtrl.addNewNews()" novalidate>
-
+                                <div class="form-group">
+                                    <div class="col-sm-4">
+                                        <label for="seccio">Idioma</label>
+                                        <select id='langSelected' class="form-control" ng-model="bonGustMainCtrl.selectedLang" required>
+                                            <option id="language{{$index}}" value="{{s.id}}"  ng-repeat="s in bonGustMainCtrl.languageArray">{{s.language}}</option>
+                                        </select>
+                                    </div>
+                                </div>              
                                 <div class="form-group">
                                     <div class="col-sm-4">
                                         <label for="seccio">Seccio</label>
@@ -229,19 +237,6 @@
 
                                 <div class="form-group">
                                     <div class="col-sm-4">
-                                        <label>Vista Previa</label>
-                                        <div class="titulo">
-                                            <span id="infoTamaño"></span>
-                                        </div>
-
-                                        <div id="marcoVistaPrevia">
-                                            <img id="vistaPrevia2" src="" alt="" />
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <div class="col-sm-4">
                                         <label for="subtitol">Subtitol</label>
                                         <input type="text" class="form-control" id="subtitol" ng-model="bonGustMainCtrl.newNews.subtitol" ng-maxlength="300" tooltip="El subtítol no pot contenir més de 60 carácters" tooltip-trigger="focus" placeholder="Introdueix un subtítol" required/>
                                     </div>
@@ -259,9 +254,6 @@
                                         <hr>
                                     </div>
                                 </div>
-
-                                {{newForm.$invalid}}
-                                {{newForm.$valid}}
 
                                 <div class="bs-example" ng-if="signUpError">
                                     <div class="alert alert-danger">
@@ -298,6 +290,14 @@
 
                         <div class="modal-body">
                             <form role="form" id="productForm" name="productForm" ng-submit="bonGustMainCtrl.addNewProduct()">
+                                <div class="form-group" showErrors>
+                                    <div class="col-sm-8">
+                                        <label for="selectedLang">Idioma</label>
+                                        <select id='languageSelected' class="form-control" ng-model="bonGustMainCtrl.selectedLang" required>
+                                            <option id="language{{$index}}" value="{{s.id}}"  ng-repeat="s in bonGustMainCtrl.languageArray">{{s.language}}</option>
+                                        </select>
+                                    </div>
+                                </div>
 
                                 <div class="form-group" showErrors>
                                     <div class="col-sm-4">
@@ -380,9 +380,6 @@
                                         <hr>
                                     </div>
                                 </div>
-
-                                {{productForm.$invalid}}
-                                {{productForm.$valid}}
 
                                 <div class="bs-example" ng-if="signUpError">
                                     <div class="alert alert-danger">
